@@ -3,11 +3,13 @@
 (Transform "BSplineTransform")
 (MaximumNumberOfIterations 10000)
 (NumberOfResolutions 2)
-(ImagePyramidSchedule 10 10 10 1 1 1)
+(ImagePyramidSchedule 8.0 4.0 4.0 2.0 1.0)
 (FixedImagePyramid "FixedSmoothingImagePyramid" )
 (MovingImagePyramid "MovingSmoothingImagePyramid" )
-(FinalGridSpacingInVoxels 50 50 50 )
+
 (NumberOfSpatialSamples 10000 10000)
+(FinalGridSpacingInVoxels 32.0)
+(FixedImageBSplineInterpolationOrder 1)
 (ImageSampler "RandomCoordinate" )
 (NewSamplesEveryIteration "true")
 (ResultImagePixelType "unsigned short")
@@ -28,3 +30,11 @@
 (NumberOfHistogramBins 32)
 (HowToCombineTransforms "Compose")
 (ErodeMask "false")
+
+
+//Order of B-Spline interpolation used in each resolution level:
+(BSplineInterpolationOrder 1)
+
+//Order of B-Spline interpolation used for applying the final deformation:
+(FinalBSplineInterpolationOrder 3)
+

@@ -1,9 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from facade import TransformElastix
-from image_operations import ImageStuff
+from src.facade import TransformElastix
+from src.image_operations import ImageStuff
 
-def create_chessboard(shape=200):
+def create_chessboard(shape=256):
     image = np.zeros((shape,shape))
     for i in range(shape):
         if i%10 == 0:
@@ -11,17 +10,18 @@ def create_chessboard(shape=200):
             image[:,i:i+1] = 255
     return image
 
-path1 = r"D:\Daten\Nora\Pre-post\data\crops\crops_21_04\10_1_POST_c1.tif"
+root = r"D:\Daten\Nora\Pre-post\data\test"+"\\"
+path1 = r"1_1_POST.tif"
 
 if __name__ == '__main__':
     chess = create_chessboard()
     t = TransformElastix()
-    t.fixed_image = path1
+    t.fixed_image = chess
 
     s = ImageStuff()
-    t.apply_b_spline_transform(chess)
+    t.apply_b_spline_transform(chess)#no error this is inverse transform therefore also display inverse vec maps...
     chess_d = t.t_result_image
 
     v = t.get_distortion_map()
-    s.show_overlay(chess,chess_d[:200,:200], vec_map=v)
+    s.show_overlay(chess,chess_d[:1000,:1000], vec_map=v, save_path="image")
     #apply random bspline tranform and register back...

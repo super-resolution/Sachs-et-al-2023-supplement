@@ -1,0 +1,9 @@
+.cache
+__pycache__/
+.git
+.idea/
+*.ini
+deprecated/
+tmp/
+outputs/
+outputs_calcium

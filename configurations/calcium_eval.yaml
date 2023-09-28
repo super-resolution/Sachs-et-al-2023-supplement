@@ -1,0 +1,16 @@
+hydra:
+  sweep:
+    dir: outputs_calcium/${directory.culture}
+    subdir: ${directory.file_name}/ch_${params.channels}
+directory:
+  condition: 230824_Homer1_ATTO643_Bassoon_CF568_CaV21_AF488_pansCF405
+  culture: Culture 4
+  root_dir: D:\Daten\Stefan\Revision\Frotiers Review\\${directory.condition}\\${directory.culture}\Best
+  file_name: Evtl fuer Abbildung
+  save_dir: results
+  save_name: auto
+params:
+  channels: [1,2]
+transform:
+  type: affine
+  parameter_file: static/affine_noscaling_parameters.txt
