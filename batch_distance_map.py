@@ -22,14 +22,14 @@ GLUA_MUNC = [
             "Experiment-8237-Airyscan Processing-03-6 pretty good",
                 ]
 
-for k in range(1,5):
-    directory = rf"D:\Daten\Stefan\Revision\Frotiers Review\230824_Homer1_ATTO643_Bassoon_CF568_CaV21_AF488_pansCF405\Culture {k}\Best"
+for k in range(5,7):
+    directory = rf"D:\Daten\Stefan\Revision\Frotiers Review\230825_GluA1_ATTO643_LGI1_CF568_Munc13_AF488_PanExM\Culture {k}\Best"
 
     files = os.listdir(directory)
     f = []
     argument = ""
     for i in range(len(files)):
-        if ".tif" in files[i] and files[i].split(".")[0] in HOMER_BASSON_BAD:
+        if ".tif" in files[i]:# and files[i].split(".")[0] in HOMER_BASSON_BAD:
             f.append(files[i].split('.')[0])
             argument = files[i].split('.')[0]
             print(subprocess.run(["python", "create_distance_map.py", f"directory.file_name={argument}", f"directory.culture=Culture {k}"]))

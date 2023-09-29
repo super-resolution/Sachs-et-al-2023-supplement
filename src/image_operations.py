@@ -14,6 +14,7 @@ class ImageStuff():
     GREY = (0.2,0.2,.2,1.0)
     GREEN = (.0, 246/255, .0)
     MAGENTA = (242/255, .0, 242/255)
+    channel_colors = {0:MAGENTA, 1:ORANGE, 2:GREEN}
     def resize_image(self, path, scale):
         image = io.imread(path)
         output_dimension = (int(image.shape[0] * scale), int(image.shape[1] * scale))
@@ -30,10 +31,13 @@ class ImageStuff():
         res_rgba = np.clip(multiplier * res_rgba, 0, 1.0)
         return res_rgba
 
-    def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None, save_path=None, px_size=None):
-        #todo: make colour dependend on the input channels?
-        im_rgba = self.image_to_rgba_color(im1, self.MAGENTA, multiplier=1)
-        res_rgba = self.image_to_rgba_color(im2, self.GREEN , multiplier=1.5)
+    def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None, save_path=None, px_size=None, ch=None):
+        if not ch:
+            im_rgba = self.image_to_rgba_color(im1, self.MAGENTA, multiplier=1)
+            res_rgba = self.image_to_rgba_color(im2, self.GREEN , multiplier=1.5)
+        if ch:
+            im_rgba = self.image_to_rgba_color(im1, self.channel_colors[ch[0]], multiplier=1)
+            res_rgba = self.image_to_rgba_color(im2, self.channel_colors[ch[1]], multiplier=1.5)
         composit = res_rgba+ im_rgba
         ax = plt.gca()
         #ax.set_facecolor((0.0, 0.0, 1.0))

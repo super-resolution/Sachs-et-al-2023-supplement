@@ -2,7 +2,7 @@
 (CheckNumberOfSamples "false" )
 (Transform "AffineDTITransform")
 
-(Scales 100000 100000 100000 1000000 1000000 1 1)
+(Scales 100 10000 10000 1000000 1000000 1 1)
 (MaximumNumberOfIterations 5000)
 (AutomaticTransformInitializationMethod "CenterOfGravity")
 (AutomaticTransformInitialization "true")

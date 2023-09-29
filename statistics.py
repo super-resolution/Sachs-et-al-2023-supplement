@@ -10,7 +10,7 @@ import math
 def plot_rim_psd(data, c_palette):
     #todo: use this plot for statistic
     for c in set(data["condition"]):
-        print(c, data[data["condition"]==c]["pearson"].median(),data[data["condition"]==c]["pearson"].std())
+        print(c, data[data["condition"]==c]["pearson"].median(),data[data["condition"]==c]["pearson"].mean(),data[data["condition"]==c]["pearson"].std(), len(data[data["condition"]==c]["pearson"]))
     data["translation"].mean(), data["translation"].std()
     ax = sns.boxplot(data=data, orient="v",x="condition", y="pearson", palette=c_palette,
         medianprops={"color": "black"})
@@ -28,16 +28,17 @@ def plot_rim_psd(data, c_palette):
 
 
 def plot_distances(data):
-    for c in set(data["condition"]):
-        ax = sns.histplot(data=data[data["condition"]==c], x="translation",  color=c_palette[c] )
-    ax.set_xlabel('distance', fontsize=16)
-    ax.set_ylabel('count', fontsize=16)
+    for i,c in enumerate(set(data["condition"])):
+        ax = sns.histplot(data=data[data["condition"]==c], x="translation",  color=c_palette[c], binwidth=100, binrange=(0,1100), alpha=1)
+        ax.set_xlabel('distance [nm]', fontsize=16)
+        ax.set_ylabel('count', fontsize=16)
 
-    ax.tick_params(axis='both', labelsize=16)
-    ax.set_xlim(0)
-    plt.savefig(r"D:\Daten\Stefan\RIM_PSD\hist.svg")
+        ax.tick_params(axis='both', labelsize=16)
+        ax.set_xlim(0)
+        plt.title(c, fontsize=24, fontweight="bold")
+        plt.savefig(fr"D:\Daten\Stefan\RIM_PSD\hist{i}.svg")
 
-    plt.show()
+        plt.show()
 
 if __name__ == '__main__':
     HOMER_BASSOON = "230824_Homer1_ATTO643_Bassoon_CF568_CaV21_AF488_pansCF405"
@@ -93,7 +94,7 @@ if __name__ == '__main__':
                     except ValueError:
                         print(f"{value} is not a float")
                 data["rotation"] = abs(parameters[0]/(2*np.pi)*360)
-                data["translation"] = np.sqrt(parameters[-1]**2+parameters[-2]**2)
+                data["translation"] = np.sqrt(parameters[-1]**2+parameters[-2]**2)*41.1769
                 data["culture"] = culture
                 data["condition"] = c_names[i]
                 data["subculture"] = post
@@ -138,7 +139,7 @@ if __name__ == '__main__':
                 #     print(culture, file)
                 # if p[0] == data["pearson"][0]:
                 #     raise ValueError(f"pearsons shouldnt be equal {file}")
-    print(n)
+        print(n)
     df = pd.concat(df)
 
     print(posthoc_ttest(df, "pearson", "condition"))

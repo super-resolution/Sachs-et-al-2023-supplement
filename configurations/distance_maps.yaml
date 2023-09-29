@@ -5,7 +5,7 @@ hydra:
     dir: outputs/${directory.culture}
     subdir: ${directory.file_name}/ch_${params.channels}_mix_${params.mixup}
 directory:
-  condition: 230824_Homer1_ATTO643_Bassoon_CF568_CaV21_AF488_pansCF405
+  condition: 230825_GluA1_ATTO643_LGI1_CF568_Munc13_AF488_PanExM
   culture: Culture 1
   root_dir: D:\Daten\Stefan\Revision\Frotiers Review\\${directory.condition}\\${directory.culture}\\Best
   file_name: Experiment-8095-Airyscan Processing-02-3

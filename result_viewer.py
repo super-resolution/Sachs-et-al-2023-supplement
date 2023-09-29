@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     base_path = fr"outputs"
     data = []
-    for k in range(1, 5):
+    for k in range(1, 7):
         directory = os.path.join(base_path, rf"Culture {k}")
         if os.path.exists(directory):
             files = os.listdir(directory)
