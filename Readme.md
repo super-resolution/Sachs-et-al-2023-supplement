@@ -1,7 +1,7 @@
 # Automated Simple Elastix
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8390729.svg)](https://doi.org/10.5281/zenodo.8390729)
-%%todo add image here 
-This package wraps around Simple Elastix [cite] and is intended for the alignment of biological data. The two main applications that are currently covered are.
+data: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8390729.svg)](https://doi.org/10.5281/zenodo.8390729)
+
+This package wraps around Simple Elastix [1] and is intended for the alignment of biological data. The two main applications that are currently covered are.
 
 
 ## Set Up

@@ -1,0 +1,18 @@
+hydra:
+  run:
+    dir: outputs_LGI1/${directory.culture}/${directory.file_name}/ch_${params.channels}_mix_${params.mixup}
+  sweep:
+    dir: outputs_LGI1/${directory.culture}
+    subdir: ${directory.file_name}/ch_${params.channels}_mix_${params.mixup}
+directory:
+  condition: LGI1
+  culture: Culture 1
+  root_dir: D:\Daten\Stefan\Revision\Frotiers Review\\${directory.condition}\\${directory.culture}
+  file_name:
+  save_dir: results
+  save_name: auto
+params:
+  channels: [0,1]
+  mixup: False
+  z_project: False
+  px_size: 0.0411769

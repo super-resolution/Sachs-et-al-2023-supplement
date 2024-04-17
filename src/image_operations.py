@@ -19,7 +19,7 @@ class ImageStuff():
         image = io.imread(path)
         output_dimension = (int(image.shape[0] * scale), int(image.shape[1] * scale))
         image = resize(image, output_dimension, preserve_range=True)
-        io.imsave("../tmp/resized.tif", image.astype("uint16"))
+        io.imsave("tmp/resized.tif", image.astype("uint16"))
         return image
 
     def image_to_rgba_color(self, image, color, multiplier=1.):
@@ -33,11 +33,11 @@ class ImageStuff():
 
     def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None, save_path=None, px_size=None, ch=None):
         if not ch:
-            im_rgba = self.image_to_rgba_color(im1, self.MAGENTA, multiplier=1)
-            res_rgba = self.image_to_rgba_color(im2, self.GREEN , multiplier=1.5)
+            im_rgba = self.image_to_rgba_color(im1, self.MAGENTA, multiplier=4)
+            res_rgba = self.image_to_rgba_color(im2, self.GREEN , multiplier=4)
         if ch:
-            im_rgba = self.image_to_rgba_color(im1, self.channel_colors[ch[0]], multiplier=1)
-            res_rgba = self.image_to_rgba_color(im2, self.channel_colors[ch[1]], multiplier=1.5)
+            im_rgba = self.image_to_rgba_color(im1, self.channel_colors[ch[0]], multiplier=3)
+            res_rgba = self.image_to_rgba_color(im2, self.channel_colors[ch[1]], multiplier=2.5)
         composit = res_rgba+ im_rgba
         ax = plt.gca()
         #ax.set_facecolor((0.0, 0.0, 1.0))

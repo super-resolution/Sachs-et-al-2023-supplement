@@ -3,11 +3,31 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import os
-from scikit_posthocs import posthoc_ttest
+from scikit_posthocs import posthoc_ttest,posthoc_mannwhitney
 import math
+from scipy.stats import shapiro
 
 
-def plot_rim_psd(data, c_palette):
+def plot_significance(x1, x2, p, height=0, start=1.1):
+    if 5.00e-02 < p <= 1.00e+00:
+        significance = "ns"
+    elif 1.00e-02 < p <= 5.00e-02:
+        significance = "*"
+    elif 1.00e-03 < p <= 1.00e-02:
+        significance = "**"
+    elif 1.00e-04 < p <= 1.00e-03:
+        significance = "***"
+    elif p <= 1.00e-04:
+        significance = "****"
+    y, h, col = start, height, 'k'
+    plt.plot([x1, x1, x2, x2], [y, y + h, y + h, y], lw=1.5, c='k', alpha=1)
+    if height <0:
+        plt.text((x1 + x2) * .5, y + h, significance, ha='center', va='top', color=col)
+    else:
+        plt.text((x1 + x2) * .5, y + h, significance, ha='center', va='bottom', color=col)
+
+def plot_rim_psd(data, c_palette, significance):
+    n=3
     #todo: use this plot for statistic
     for c in set(data["condition"]):
         print(c, data[data["condition"]==c]["pearson"].median(),data[data["condition"]==c]["pearson"].mean(),data[data["condition"]==c]["pearson"].std(), len(data[data["condition"]==c]["pearson"]))
@@ -17,6 +37,13 @@ def plot_rim_psd(data, c_palette):
     sns.swarmplot(data=data, orient="v",x="condition", y="pearson", c="black")
     # for key,value in data.items():
     #     plt.plot([0,1], value, linestyle='dotted',  marker="o", markersize=6)
+
+    for i in range(n):
+        for j in range(n-1 - i):
+            j += i + 1
+            p_value = significance.iloc[i, j]
+            plot_significance( i,  j, p_value, height=0.2+(j - i)*0.1)
+
 
     ax.set_xlabel('condition', fontsize=16)
     ax.set_ylabel('PCC', fontsize=16)
@@ -37,7 +64,6 @@ def plot_distances(data):
         ax.set_xlim(0)
         plt.title(c, fontsize=24, fontweight="bold")
         plt.savefig(fr"D:\Daten\Stefan\RIM_PSD\hist{i}.svg")
-
         plt.show()
 
 if __name__ == '__main__':
@@ -141,11 +167,14 @@ if __name__ == '__main__':
                 #     raise ValueError(f"pearsons shouldnt be equal {file}")
         print(n)
     df = pd.concat(df)
-
-    print(posthoc_ttest(df, "pearson", "condition"))
+    for c in c_names:
+        data = df.loc[df["condition"]==c]["pearson"].to_numpy()
+        print(c, shapiro(data))
+    significance = posthoc_ttest(df, "pearson", "condition")
+    print(significance)
     print(df["translation"].mean(),df["translation"].std())
     #df.hist(column="translation", by="condition")
-    plot_rim_psd(df, c_palette)#df.boxplot(column="pearson", by="condition")
+    plot_rim_psd(df, c_palette, significance)#df.boxplot(column="pearson", by="condition")
     plot_distances(df)
     # plt.savefig("tmp.svg")
     # plt.show()

@@ -2,8 +2,8 @@
 (CheckNumberOfSamples "false" )
 (Transform "BSplineTransform")
 (MaximumNumberOfIterations 10000)
-(NumberOfResolutions 2)
-(ImagePyramidSchedule 8.0 4.0 4.0 2.0 1.0)
+(NumberOfResolutions 3)
+(ImagePyramidSchedule 128 64 32)
 (FixedImagePyramid "FixedSmoothingImagePyramid" )
 (MovingImagePyramid "MovingSmoothingImagePyramid" )
 

@@ -37,11 +37,10 @@ if __name__ == '__main__':
     base = rf"outputs"
 
     files_to_use = [
-                    "Experiment-7522-Airyscan Processing-02-5",
-                    "Experiment-7526-Airyscan Processing-06-4",
+                    "RIM5051 middlecomposite",
                     ]
 
-    bad = ["Experiment-7500-Airyscan Processing-05-3",
+    bad = [
 
            ]
     files = os.listdir(base)
