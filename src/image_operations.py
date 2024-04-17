@@ -5,6 +5,9 @@ from skimage import io
 import os
 
 class ImageStuff():
+    """
+    Perform some basic image operations like rescaling, plotting, transformation to RGBA
+    """
     ORANGE = (0.9, .4, .11, 0.15)
     BLACK = (0., 0., 0., 1.)
     #ORANGE = (1,1,1,1)
@@ -15,14 +18,27 @@ class ImageStuff():
     GREEN = (.0, 246/255, .0)
     MAGENTA = (242/255, .0, 242/255)
     channel_colors = {0:MAGENTA, 1:ORANGE, 2:GREEN}
-    def resize_image(self, path, scale):
+    def resize_image(self, path:str, scale:float):
+        """
+        Resize an image from path to the defined scale
+        :param path: path to image
+        :param scale: new scale
+        :return: resacled image
+        """
         image = io.imread(path)
         output_dimension = (int(image.shape[0] * scale), int(image.shape[1] * scale))
         image = resize(image, output_dimension, preserve_range=True)
         io.imsave("tmp/resized.tif", image.astype("uint16"))
         return image
 
-    def image_to_rgba_color(self, image, color, multiplier=1.):
+    def image_to_rgba_color(self, image:np.ndarray, color:tuple, multiplier:float=1.):
+        """
+        Turn a greyscale image to an RGBA color image of the defined color
+        :param image: input
+        :param color: color(r,g,b,a)
+        :param multiplier: multiply intensityby this factor
+        :return: RGBA image
+        """
         res_rgba = np.zeros((image.shape[0], image.shape[1], 4))
         res_rgba[:, :, 0] = (image / image.max()) * color[0]
         res_rgba[:, :, 1] = (image / image.max()) * color[1]
@@ -31,7 +47,19 @@ class ImageStuff():
         res_rgba = np.clip(multiplier * res_rgba, 0, 1.0)
         return res_rgba
 
-    def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None, save_path=None, px_size=None, ch=None):
+    def show_overlay(self, im1:np.ndarray, im2:np.ndarray, scale:float=1, TP=None, vec_map=None, save_path:str=None, px_size:float=None, ch:int=None):
+        """
+        Overlay im1 and im2
+        :param im1:
+        :param im2:
+        :param scale: scaling for text
+        :param TP: Elastix Transform parameter file
+        :param vec_map: Vector quiver map
+        :param save_path: path to save overlay to
+        :param px_size:
+        :param ch:
+        :return:
+        """
         if not ch:
             im_rgba = self.image_to_rgba_color(im1, self.MAGENTA, multiplier=4)
             res_rgba = self.image_to_rgba_color(im2, self.GREEN , multiplier=4)
